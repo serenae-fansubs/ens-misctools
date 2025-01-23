@@ -260,6 +260,7 @@ export default function CheckGeneral({
     ens: '',
     ensvision: '',
     etherscan: '',
+    etherscan2: '',
     opensea: '',
     looksrare: '',
     x2y2: '',
@@ -309,6 +310,10 @@ export default function CheckGeneral({
           }
           if (nameData.manager) {
             links.etherscan = `https://etherscan.io/nft/${contractAddr}/${tokenId}`
+            if (isETH2LD && nameData.isWrapped) {
+              links.etherscan = `https://etherscan.io/nft/${ensConfig[chain].ETHRegistrar.address}/${eth2LDTokenId}`
+              links.etherscan2 = `https://etherscan.io/nft/${ensConfig[chain].NameWrapper.address}/${wrappedTokenId}`
+            }
             links.opensea = `https://opensea.io/assets/ethereum/${contractAddr}/${tokenId}`
             links.looksrare = `https://looksrare.org/collections/${contractAddr}/${tokenId}`
             links.x2y2 = `https://x2y2.io/eth/${contractAddr}/${tokenId}`
@@ -320,6 +325,10 @@ export default function CheckGeneral({
         } else if (chain === goerli.id) {
           if (nameData.manager) {
             links.etherscan = `https://goerli.etherscan.io/nft/${contractAddr}/${tokenId}`
+            if (isETH2LD && nameData.isWrapped) {
+              links.etherscan = `https://goerli.etherscan.io/nft/${ensConfig[chain].ETHRegistrar.address}/${eth2LDTokenId}`
+              links.etherscan2 = `https://goerli.etherscan.io/nft/${ensConfig[chain].NameWrapper.address}/${wrappedTokenId}`
+            }
             links.opensea = `https://testnets.opensea.io/assets/goerli/${contractAddr}/${tokenId}`
 
             nftMetadataLink = `https://metadata.ens.domains/goerli/${contractAddr}/${tokenId}`
@@ -328,6 +337,10 @@ export default function CheckGeneral({
         } else if (chain === sepolia.id) {
           if (nameData.manager) {
             links.etherscan = `https://sepolia.etherscan.io/nft/${contractAddr}/${tokenId}`
+            if (isETH2LD && nameData.isWrapped) {
+              links.etherscan = `https://sepolia.etherscan.io/nft/${ensConfig[chain].ETHRegistrar.address}/${eth2LDTokenId}`
+              links.etherscan2 = `https://sepolia.etherscan.io/nft/${ensConfig[chain].NameWrapper.address}/${wrappedTokenId}`
+            }
             links.opensea = `https://testnets.opensea.io/assets/sepolia/${contractAddr}/${tokenId}`
 
             nftMetadataLink = `https://metadata.ens.domains/sepolia/${contractAddr}/${tokenId}`
@@ -336,6 +349,10 @@ export default function CheckGeneral({
         } else if (chain === holesky.id) {
           if (nameData.manager) {
             links.etherscan = `https://holesky.etherscan.io/nft/${contractAddr}/${tokenId}`
+            if (isETH2LD && nameData.isWrapped) {
+              links.etherscan = `https://holesky.etherscan.io/nft/${ensConfig[chain].ETHRegistrar.address}/${eth2LDTokenId}`
+              links.etherscan2 = `https://holesky.etherscan.io/nft/${ensConfig[chain].NameWrapper.address}/${wrappedTokenId}`
+            }
 
             nftMetadataLink = `https://metadata.ens.domains/holesky/${contractAddr}/${tokenId}`
             nftMetadataImage = `https://metadata.ens.domains/holesky/${contractAddr}/${tokenId}/image`
@@ -580,6 +597,7 @@ export default function CheckGeneral({
         <NFTLink link={links.ens} image="/ens.png" alt="ENS Manager App"/>
         <NFTLink link={links.ensvision} image="/ensvision.png" alt="ENS.Vision"/>
         <NFTLink link={links.etherscan} image="/etherscan.png" alt="Etherscan"/>
+        <NFTLink link={links.etherscan2} image="/etherscan.png" alt="Etherscan (Wrapped NFT)"/>
         <NFTLink link={links.kodex} image="/kodex.png" alt="Kodex"/>
         <NFTLink link={links.looksrare} image="/looksrare.svg" alt="LooksRare"/>
         <NFTLink link={links.x2y2} image="/x2y2.svg" alt="X2Y2"/>

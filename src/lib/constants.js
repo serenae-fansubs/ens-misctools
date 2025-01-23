@@ -35,7 +35,7 @@ export const ensConfig = {
       abi: latestPublicResolverABI,
     },
     UniversalResolver: {
-      address: '0x8cab227b1162f03b8338331adaad7aadc83b895e',
+      address: '0xce01f8eee7E479C928F8919abD53E553a36CeF67',
       abi: universalResolverABI
     },
     subgraphURL: 'https://gateway-arbitrum.network.thegraph.com/api/92a17a755278dc1acccd844ba7f52199/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH',
@@ -70,7 +70,7 @@ export const ensConfig = {
       abi: latestPublicResolverABI,
     },
     UniversalResolver: {
-      address: '0xfc4AC75C46C914aF5892d6d3eFFcebD7917293F1',
+      address: '0x898A1182F3C2BBBF0b16b4DfEf63E9c3e9eB4821',
       abi: universalResolverABI
     },
     subgraphURL: 'https://api.thegraph.com/subgraphs/name/ensdomains/ensgoerli',
@@ -100,7 +100,7 @@ export const ensConfig = {
       abi: latestPublicResolverABI,
     },
     UniversalResolver: {
-      address: '0xBaBC7678D7A63104f1658c11D6AE9A21cdA09725',
+      address: '0xc8af999e38273d658be1b921b88a9ddf005769cc',
       abi: universalResolverABI
     },
     subgraphURL: 'https://api.studio.thegraph.com/query/49574/enssepolia/version/latest',
