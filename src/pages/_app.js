@@ -15,10 +15,10 @@ const config = getDefaultConfig({
   ssr: true,
   chains: [mainnet, goerli, sepolia, holesky],
   transports: {
-    [mainnet.id]: http(),
+    [mainnet.id]: http('https://mainnet.infura.io/v3/535efce550bd42cf996a56d827d3a951'),
     [goerli.id]: http(),
-    [sepolia.id]: http(),
-    [holesky.id]: http(),
+    [sepolia.id]: http('https://sepolia.infura.io/v3/535efce550bd42cf996a56d827d3a951'),
+    [holesky.id]: http('https://holesky.infura.io/v3/535efce550bd42cf996a56d827d3a951'),
   },
 })
 
