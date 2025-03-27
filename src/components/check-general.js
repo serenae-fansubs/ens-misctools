@@ -249,7 +249,9 @@ export default function CheckGeneral({
   const resolverTags = []
   const ethAddressTags = []
   let expiryStr = ''
+  let graceExpiryStr = ''
   const expiryTags = []
+  const graceExpiryTags = []
 
   let namehashHex = ''
   let namehashDec = ''
@@ -271,6 +273,9 @@ export default function CheckGeneral({
   let nftMetadataLink = ''
   let nftMetadataImage = ''
   let isNameExpired = false
+
+  let isNFTAvatar = false
+  let avatarNFTCheckerLink = ''
 
   if (!showLoading && validChain(chain, chains)) {
     const {
@@ -295,6 +300,14 @@ export default function CheckGeneral({
       namehashDec = nodeDecimal
       labelhashHex = labelhash
       labelhashDec = labelhashDecimal
+
+      if (nameData.avatar) {
+        const matches = /eip155:1\/(erc1155|erc721):(0x[0-9a-f]{40})\/(\d+)/i.exec(nameData.avatar)
+        if (matches && matches.length && matches.length == 4) {
+          isNFTAvatar = true
+          avatarNFTCheckerLink = `https://nftchecker.io/?contract=${matches[2]}&token=${matches[3]}`
+        }
+      }
 
       links.ens = `https://app.ens.domains/${bestDisplayName}`
       if (isETH2LD || nameData.isWrapped) {
@@ -533,6 +546,25 @@ export default function CheckGeneral({
           isNameExpired = true
           const graceEnd = epochMs + days90Ms
 
+          if (isETH2LD) {
+            graceExpiryStr = parseExpiry(BigInt(Math.round(Number(graceEnd) / 1000)))
+
+            if (nowMs >= graceEnd) {
+              graceExpiryTags.push({
+                value: 'Released',
+                color: 'redSecondary',
+                tooltip: 'This name\'s grace period has expired.',
+                tooltipDialog: <>
+                  The grace period for this name ended on {graceExpiryStr}.
+                  <br/><br/>
+                  You can re-register the name <a href={`https://app.ens.domains/name/${name}/register`}>here</a>.
+                  <br/><br/>
+                  More information here: <a href="https://support.ens.domains/core/registration/renewals">Renewals</a>
+                </>
+              })
+            }
+          }
+
           expiryTags.push({
             value: 'Expired',
             color: 'redSecondary',
@@ -616,6 +648,7 @@ export default function CheckGeneral({
             {nameData.owner ? <RecordItemRow loading={showLoading} label="Owner" value={nameData.owner} secondaryValue={nameData.ownerPrimaryName} shortValue={abbreviatedValue(nameData.owner)} tooltipValue={nameData.owner} tags={ownerTags}/> : <></>}
             <RecordItemRow loading={showLoading} label="Manager" value={nameData.manager} secondaryValue={nameData.managerPrimaryName} shortValue={abbreviatedValue(nameData.manager)} tooltipValue={nameData.manager} tags={managerTags}/>
             {expiryStr ? <RecordItemRow loading={showLoading} label="Expiry" value={expiryStr} tags={expiryTags}/> : <></>}
+            {graceExpiryStr ? <RecordItemRow loading={showLoading} label="Grace" subLabel="Expiry" value={graceExpiryStr} tags={graceExpiryTags}/> : <></>}
             <RecordItemRow loading={showLoading} label="Resolver" value={nameData.resolver} secondaryValue={nameData.resolverPrimaryName} shortValue={abbreviatedValue(nameData.resolver)} tooltipValue={nameData.resolver} tags={resolverTags}/>
             <RecordItemRow loading={showLoading} label="ETH" icon={<EthSVG/>} value={nameData.ethAddress} secondaryValue={nameData.ethAddressPrimaryName} shortValue={abbreviatedValue(nameData.ethAddress)} tooltipValue={nameData.ethAddress} tags={ethAddressTags}/>
             {nameData.avatar ? 
@@ -635,6 +668,13 @@ export default function CheckGeneral({
                         <img src={src} alt="Avatar" width="42" height="42"/>
                       )}
                     </ProgressiveImage>
+                  }
+                  {isNFTAvatar &&
+                    <Link href={avatarNFTCheckerLink} style={{display:'inline-block', marginRight:'0.5rem'}}>
+                      <div>
+                        <Image src="/nftchecker.png" alt="NFTChecker" title="Click here to check this avatar's NFT on NFTChecker.io" width="42" height="42"/>
+                      </div>
+                    </Link>
                   }
                 </td>
               </tr>

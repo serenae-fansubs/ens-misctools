@@ -305,13 +305,13 @@ export async function copyToClipBoard(text) {
 
 export function getChainName(chainId) {
   if (chainId === mainnet.id) {
-    return mainnet.name
+    return 'mainnet'
   } else if (chainId === goerli.id) {
-    return goerli.name
+    return goerli.name.toLowerCase()
   } else if (chainId === sepolia.id) {
-    return sepolia.name
+    return sepolia.name.toLowerCase()
   } else if (chainId === holesky.id) {
-    return holesky.name
+    return holesky.name.toLowerCase()
   }
 }
 
